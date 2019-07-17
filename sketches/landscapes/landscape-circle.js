@@ -10,15 +10,15 @@ random.setSeed(seed)
 console.log(random.getSeed())
 
 const settings = {
-	dimensions: [2048, 2048],
+	dimensions: [512, 512],
 	name: 'landscape',
-	suffix: seed
-	// fps: 24,
-	// animate: true,
-	// duration: 10
+	suffix: seed,
+	fps: 10,
+	animate: true,
+	duration: 10
 }
 
-const paddinginPixels = 300
+const paddinginPixels = 80
 const padding = [
 	paddinginPixels / settings.dimensions[0],
 	paddinginPixels / settings.dimensions[1]
@@ -140,7 +140,7 @@ const sketch = () => {
 		context.fillStyle = bg
 		context.fillRect(0, 0, width, height)
 		context.strokeStyle = color
-		context.lineWidth = 8
+		context.lineWidth = 2
 		context.lineJoin = 'round'
 
 		Object.entries(points).forEach(element => {
