@@ -7,9 +7,15 @@ const img = new Image()
 img.crossOrigin = 'Anonymous'
 
 const numX = 10
-const numY = 10
+const numY = 25
+const thickness = 10
 const points = createGrid(numX, numY)
-const padding = 400
+const padding = 200
+
+let settings = {
+	dimensions: [1080, 2560],
+	name: 'trails',
+}
 
 function createGrid(numX, numY) {
 	let points = []
@@ -44,11 +50,14 @@ function nextPoint(point, dir) {
 }
 
 function drawStuff(context, points, width, height, padding) {
-	context.lineWidth = 20
+	context.lineWidth = thickness
 	context.lineJoin = 'round'
 	context.lineCap = 'round'
 
-	color.contrastRatio(random.pick(points).color.rgb, "#ffffff") < 4.5
+	// // multiplier for offset version like wallpapers
+	// points.forEach(point => point.v = point.v / 2)
+
+	color.contrastRatio(random.pick(points).color.rgb, "#ffffff") < 2.2
 	? context.fillStyle = "white"
 	: context.fillStyle = "black"
 	context.fillRect(0, 0, width, height)
@@ -103,7 +112,7 @@ function drawStuff(context, points, width, height, padding) {
 			context.arc(
 				lerp(padding, width - padding, point.u),
 				lerp(padding, height - padding, point.v),
-				context.lineWidth / 2,
+				thickness / 2,
 				0,
 				Math.PI * 2
 			)
@@ -115,14 +124,16 @@ function drawStuff(context, points, width, height, padding) {
 
 async function loadImage() {
 	try {
-		let data = await fetch('https://source.unsplash.com/random/2048x2048')
-		// fetch('https://source.unsplash.com/random/2048x2048').then(data => {
+		let data = await fetch(`https://source.unsplash.com/random/${settings.dimensions[0] / 5}x${settings.dimensions[1] / 5}`)
+		// // use instead of fetch for specific wallpaper
+		// data = {
+		// 	url: `https://images.unsplash.com/photo-1562620974-b7311032ff6d?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=${settings.dimensions[1] / 2}&ixlib=rb-1.2.1&q=80&w=${settings.dimensions[0] / 2}`
+		// }
 		id = data.url.match(
 			/https:\/\/images\.unsplash\.com\/photo-([\da-f]+-[\da-f]+)/
 		)[1]
 		img.src = data.url
 		return id
-		// })
 	} catch (error) {
 		console.error(error)
 	}
@@ -144,11 +155,6 @@ const sketch = () => {
 			}
 		}
 	}
-}
-
-let settings = {
-	dimensions: [2048, 2048],
-	name: 'trails',
 }
 
 loadImage().then((seed) => {
