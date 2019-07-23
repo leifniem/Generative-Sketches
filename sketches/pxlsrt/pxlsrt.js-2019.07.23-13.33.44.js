@@ -32,43 +32,46 @@ function pixelSort(context, width, height) {
 	}
 
 	let trailLength
-	const lumaLimit = 4000
+	// const lumaLimit = 4000
 	let interval, positions, tempX, tempY, angle
 	for (let y = 0; y < height; y++) {
 		for (let x = 0; x < width; x++) {
 			if (!newPix[y][x].visited) {
 				interval = []
 				positions = []
-				tempLuma = random.rangeFloor(0, lumaLimit)
-				// tempLuma = lumaLimit
+				// tempLuma = random.rangeFloor(0, lumaLimit)
+				trailLength = random.range(10, limit)
 				tempX = x
 				tempY = y
 
 				// gather pixels for sorting
 				while (
-					tempLuma > 0 &&
+					// tempLuma > 0 &&
+					trailLength &&
 					tempX < width &&
 					tempY < height &&
 					tempX > 0 &&
-					tempY > 0 &&
-					!newPix[tempY][tempX].visited
+					tempY > 0
+					&& !newPix[tempY][tempX].visited
 				) {
 					positions.push([tempY, tempX])
 					interval.push(newPix[tempY][tempX])
-					tempLuma -=
-						(newPix[tempY][tempX].r +
-							newPix[tempY][tempX].g +
-							newPix[tempY][tempX].b) /
-						3
+					trailLength--
+					// tempLuma -=
+					// 	(newPix[tempY][tempX].r +
+					// 		newPix[tempY][tempX].g +
+					// 		newPix[tempY][tempX].b) /
+					// 	3
 					angle =
 						random.noise2D(tempX / width, tempY / height) * Math.PI
 					// tempY++
 					// Math.sin(angle) > 0
 					// 	? (tempX += 1)
-					// 	: Math.cos(angle) !== 0 ? (tempX -= 1) : tempX
-					// Math.sin(angle) > 0 ? tempY += 1 : (Math.sin(angle) !== 0 ? tempY -= 1 : tempY)
-					tempX += Math.round(Math.cos(angle) * 3)
-					tempY += Math.abs(Math.round(Math.sin(angle) * 3))
+					Math.cos(angle) > 0 ? tempX += 1 : (Math.cos(angle) !== 0 ? tempX -= 1 : tempX)
+					// Math.sin(angle) > 0 ? tempY += 1 : ''
+					tempY++
+					// tempX += Math.round(Math.cos(angle) * 3)
+					// tempY += Math.abs(Math.round(Math.sin(angle) * 3))
 					// Math.cos(angle) > 0 ? tempX += 1 : tempX
 					// Math.sin(angle) > 0 ? tempY += 1 : tempY
 				}
