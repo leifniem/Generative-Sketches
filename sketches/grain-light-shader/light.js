@@ -8,7 +8,7 @@ const settings = {
 	context: 'webgl',
 	animate: true,
 	duration: 5,
-	fps: 10
+	fps: 24
 }
 
 // Your glsl code
@@ -23,7 +23,7 @@ const frag = glsl(/* glsl */ `
 	#pragma glslify: noise = require('glsl-noise/simplex/2d')
 
   void main () {
-		vec2 lightPos = vec2(vUv.x - sin(playhead * PI * 2.0) / 2.0 - 0.5, vUv.y - cos(playhead * PI * 2.0) / 2.0);
+		vec2 lightPos = vec2(vUv.x - sin((playhead -0.5) * PI * 1.2) / 2.0 - 0.5, vUv.y - cos((playhead -0.5) * PI * 1.2) / 2.0);
 		vec2 center = vec2(vUv.x - 0.5, vUv.y);
 		float dist = length(center);
 		float lightradius = length(lightPos);
