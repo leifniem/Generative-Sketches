@@ -1,27 +1,26 @@
 const canvasSketch = require('canvas-sketch');
 const shader = require('canvas-sketch-util/shader');
 const loadAsset = require('load-asset');
-const vert = require('./vert.glsl')
 const frag = require('./frag.glsl')
 
 const settings = {
-	dimensions: [2048, 2048],
+	dimensions: [1024, 1024],
 	context: 'webgl',
 	animate: true,
 	duration: 10,
 };
 
 const sketch = async ({ gl }) => {
-	const tex = await loadAsset("./text.jpg")
+	const text = await loadAsset("./text.jpg")
 	return shader({
 		gl,
 		frag,
-		vert,
 		uniforms: {
-			tex,
-			time: ({ playhead }) => playhead,
+			text,
+			time: ({ time }) => time,
+			iResolution: ({width, height}) => [width, height]
 		}
 	})
-};
+}
 
 canvasSketch(sketch, settings);

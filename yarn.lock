@@ -4391,6 +4391,18 @@ glsl-face-normal@^1.0.2:
   resolved "https://registry.yarnpkg.com/glsl-face-normal/-/glsl-face-normal-1.0.2.tgz#7ee775d919a4f2ee92f57bb698e87cc75dbf1288"
   integrity sha1-fud12Rmk8u6S9Xu2mOh8x12/Eog=
 
+glsl-fast-gaussian-blur@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/glsl-fast-gaussian-blur/-/glsl-fast-gaussian-blur-1.0.2.tgz#95bc77f644a22f06e5ed58e128697f8b17290b08"
+  integrity sha1-lbx39kSiLwbl7VjhKGl/ixcpCwg=
+
+glsl-hash-blur@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/glsl-hash-blur/-/glsl-hash-blur-1.0.3.tgz#85ce037f744de15e6fda9e38dbcd93504b7647c4"
+  integrity sha1-hc4Df3RN4V5v2p44282TUEt2R8Q=
+  dependencies:
+    glsl-random "0.0.5"
+
 glsl-hsl2rgb@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/glsl-hsl2rgb/-/glsl-hsl2rgb-1.1.0.tgz#b4f53d9ebb204aa8e3c64d52dbc1659c490b0aa9"
@@ -4409,6 +4421,11 @@ glsl-noise@^0.0.0:
   version "0.0.0"
   resolved "https://registry.yarnpkg.com/glsl-noise/-/glsl-noise-0.0.0.tgz#367745f3a33382c0eeec4cb54b7e99cfc1d7670b"
   integrity sha1-NndF86MzgsDu7Ey1S36Zz8HXZws=
+
+glsl-random@0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/glsl-random/-/glsl-random-0.0.5.tgz#bd00c8c1ab1f5587e5fe2d48e83c50c5b9798b5b"
+  integrity sha1-vQDIwasfVYfl/i1I6DxQxbl5i1s=
 
 glsl-resolve@0.0.1:
   version "0.0.1"

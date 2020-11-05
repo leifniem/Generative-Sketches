@@ -19,6 +19,7 @@
     "eases": "^1.0.8",
     "gl-matrix": "^3.3.0",
     "glsl-face-normal": "^1.0.2",
+    "glsl-hash-blur": "^1.0.3",
     "glsl-hsl2rgb": "^1.1.0",
     "glsl-noise": "^0.0.0",
     "load-asset": "^1.2.0",
@@ -35,6 +36,7 @@
     ]
   },
   "devDependencies": {
-    "babel-preset-env": "^1.7.0"
+    "babel-preset-env": "^1.7.0",
+    "glsl-fast-gaussian-blur": "^1.0.2"
   }
 }
