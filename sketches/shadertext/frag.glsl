@@ -9,6 +9,7 @@ uniform sampler2D text;
 vec3 sample(vec2 uv);
 
 #define ITERATIONS 20
+#define BLURSTRENGTH 20.
 
 #pragma glslify: noise = require('glsl-noise/simplex/2d')
 #pragma glslify: blur = require('glsl-fast-gaussian-blur/13')
@@ -18,7 +19,7 @@ float random (vec2 co) {
     highp float b = 78.233;
     highp float c = 43758.5453;
     highp float dt= dot(co.xy ,vec2(a,b));
-    highp float sn= mod(dt,3.14);
+    highp float sn= mod(dt,3.14 * time);
     return fract(sin(sn) * c);
 }
 
@@ -32,22 +33,20 @@ vec2 displ(vec2 uvIn, float mult) {
 	return vec2(uv.x + displ, uv.y + displ);
 }
 
-// vec3 sample(vec2 uv){
-// 	// return texture2D(text, displ(uv + noisey(uv))).rgb;
-// }
+// vec2(-uv.y, uv.x)
+vec4 blurSample(vec2 uv, float base, float off) {
+	vec2 dis = displ(uv, base + off * 2.);
+	return blur(text, dis, iResolution.xy, dis * vec2(random(uv) * BLURSTRENGTH)) / 2. +
+	blur(text, dis, iResolution.xy, dis * vec2(random(vec2(-uv.y, uv.x)) * BLURSTRENGTH  / 2.)) / 2.;
+}
 
 void main () {
-	float hash = mod(floor(fract(time)*20.0) * 382.0231, 21.321);
+	float offset = BLURSTRENGTH / 600.;
+	float base = 1.;
 	gl_FragColor = vec4(
-		blur(text, displ(vUv, .9), iResolution.xy, vec2(noisey(vUv) * 200. * random(vUv * sin(time)))).r / 2. +
-		blur(text, displ(vUv, .95), iResolution.xy, vec2(noisey(vUv.yx) * 200. * random(vUv * sin(time)))).r / 2.
-		+ .05,
-		blur(text, displ(vUv, 1.), iResolution.xy, vec2(noisey(vUv) * 200. * random(vUv * sin(time)))).g / 2. +
-		blur(text, displ(vUv, 1.05), iResolution.xy, vec2(noisey(vUv.yx) * 200. * random(vUv * sin(time)))).g / 2.
-		+ .05,
-		blur(text, displ(vUv, 1.1), iResolution.xy, vec2(noisey(vUv) * 200. * random(vUv * sin(time)))).b / 2. +
-		blur(text, displ(vUv, 1.15), iResolution.xy, vec2(noisey(vUv.yx) * 200. * random(vUv * sin(time)))).b / 2.
-		+ .075,
+		blurSample(vUv, base, - offset).r + .1,
+		blurSample(vUv, base - offset, offset).g + .08,
+		blurSample(vUv, base + offset, offset).b + .1,
 		1.
 	);
 }
