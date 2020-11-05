@@ -179,16 +179,17 @@ const sketch = async () => {
 let texture = new Image()
 texture.crossOrigin = 'Anonymous'
 
+texture.onload = () => {
+	canvasSketch(sketch, settings)
+}
+
 async function loadImage() {
 	try {
 		let data = await fetch(
-			`https://source.unsplash.com/collection/8249707/${settings.dimensions[0] / 2}x${settings.dimensions[1] / 2}`
+			`https://source.unsplash.com/collection/8249707/${
+				settings.dimensions[0]
+			}x${settings.dimensions[1]}`
 		)
-
-		// use instead of fetch for specific wallpaper
-		// data = {
-		// 	url: `https://images.unsplash.com/photo-1577915509669-e8daeb28b498?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=${settings.dimensions[1]}&ixlib=rb-1.2.1&q=80&w=${settings.dimensions[0]}`
-		// }
 
 		id = data.url.match(
 			/https:\/\/images\.unsplash\.com\/photo-([\da-f]+-[\da-f]+)/
@@ -202,9 +203,4 @@ async function loadImage() {
 
 loadImage().then((seed) => {
 	settings.prefix = seed
-	// settings.suffix = random.getSeed()
-	settings.suffix = "245617"
-	texture.onload = () => {
-		canvasSketch(sketch, settings)
-	}
 })
