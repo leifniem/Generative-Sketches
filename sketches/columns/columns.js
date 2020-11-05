@@ -11,17 +11,18 @@ require('three/examples/js/controls/OrbitControls')
 
 const settings = {
 	context: 'webgl',
-	dimensions: 'a4',
+	dimensions: [1440, 2560],
 	name: 'isoCube',
 	suffix: random.getSeed(),
 	attributes: { antialias: true },
 	animate: false
 }
 
-palette = random.pick(palettes)
-// bg = random.pick(palette)
-bg = 'black'
-// palette.splice(palette.indexOf(bg), 1)
+// palette = random.pick(palettes)
+palette = require("../delta.json")
+bg = random.pick(palette)
+// bg = 'black'
+palette.splice(palette.indexOf(bg), 1)
 
 const sketch = ({ context, width, height, playhead }) => {
 	const renderer = new THREE.WebGLRenderer({
@@ -83,7 +84,7 @@ const sketch = ({ context, width, height, playhead }) => {
 		}
 	})
 
-	for (let i = 0; i < 49; i++) {
+	for (let i = 0; i < 100; i++) {
 		const mesh = new THREE.Mesh(
 			box,
 			random.value() > 0.8 ? iridescentMat : blackMat
@@ -91,12 +92,12 @@ const sketch = ({ context, width, height, playhead }) => {
 		// mesh.castShadow = true
 		// mesh.receiveShadow = true
 		mesh.position.set(
-			(i % 7) + random.range(-2, 2),
-			random.range(5, 10),
-			~~(i / 7) + random.range(-2, 2)
+			random.range(-5, 5),
+			random.range(20, 25),
+			random.range(-5, 5)
 		)
 		const size = random.range(0.25, 0.75)
-		mesh.scale.set(size, 10, size)
+		mesh.scale.set(size, size * 2.5, size)
 		scene.add(mesh)
 	}
 
@@ -108,8 +109,8 @@ const sketch = ({ context, width, height, playhead }) => {
 	const ambient = new THREE.AmbientLight('white', 0.3)
 	light.position.set(-20, 40, 15)
 	fill.position.set(15, 8, 5)
-	scene.add(light)
-	scene.add(fill)
+	// scene.add(light)
+	// scene.add(fill)
 	scene.add(ambient)
 	// light.castShadow = true
 	// fill.castShadow = true
@@ -139,7 +140,7 @@ const sketch = ({ context, width, height, playhead }) => {
 			camera.near = -100
 			camera.far = 100
 
-			camera.position.set(zoom, zoom * 3, zoom)
+			camera.position.set(zoom, zoom * -3, zoom)
 			camera.lookAt(new THREE.Vector3(0, 7, 0))
 			camera.updateProjectionMatrix()
 		},

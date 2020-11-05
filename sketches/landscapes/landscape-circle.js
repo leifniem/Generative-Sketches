@@ -10,15 +10,15 @@ random.setSeed(seed)
 console.log(random.getSeed())
 
 const settings = {
-	dimensions: [512, 512],
+	dimensions: [1440, 2560],
 	name: 'landscape',
 	suffix: seed,
 	fps: 10,
-	animate: true,
+	// animate: true,
 	duration: 10
 }
 
-const paddinginPixels = 80
+const paddinginPixels = 200
 const padding = [
 	paddinginPixels / settings.dimensions[0],
 	paddinginPixels / settings.dimensions[1]
@@ -50,16 +50,16 @@ const applyNoise = (point, time) => {
 	const timeOffsetY = Math.cos(Math.PI * 2 * time)
 	const secondarynoise =
 		Math.pow(
-			random.noise2D(point.u + timeOffsetX, point.v + timeOffsetY, 1.3) +
+			random.noise2D(point.u + timeOffsetX, point.v + timeOffsetY, 1.8) +
 				0.2,
 			4
 		) * 2
 	const tertiarynoise = Math.pow(
-		random.noise2D(point.u + timeOffsetX, point.v + timeOffsetY, 10, 0.9),
+		random.noise2D(point.u + timeOffsetX, point.v + timeOffsetY, 10, 1.2),
 		3
 	)
 	let noise =
-		random.noise2D(point.u + timeOffsetX, point.v + timeOffsetY, 0.2) -
+		random.noise2D(point.u + timeOffsetX, point.v + timeOffsetY, 0.3) -
 		secondarynoise
 	secondarynoise > 0
 		? (noise += (secondarynoise + 0.2) * tertiarynoise) * 0.5
@@ -72,11 +72,11 @@ const drawLine = (context, points, width, height, x, y) => {
 	let point = points[[y, x]]
 	;(tempi = y), (tempj = x)
 	context.beginPath()
-	context.moveTo(point.u * width, point.v * height)
+	context.moveTo(point.u * width, point.v * height - 500)
 	while (tempi < gridY && tempj < gridX && !point.visited) {
 		point.visited = true
 		tempi++
-		tempj--
+		tempj++
 		// if (!(tempi < gridY && tempj < gridX && tempi > 0 && tempj > 0)) {
 		// 	break
 		// }
@@ -86,7 +86,7 @@ const drawLine = (context, points, width, height, x, y) => {
 		point = points[[tempi, tempj]]
 		context.lineTo(
 			point.u * width,
-			point.v * height
+			point.v * height - 500
 			// ((points[[tempi * gridX, tempj]].u + points[(tempi - 1) * gridX + (tempj - 1)].u) / 2) * width,
 			// ((points[[tempi * gridX, tempj]].v + points[(tempi - 1) * gridX + (tempj - 1)].v) / 2) * height
 		)
@@ -103,12 +103,14 @@ const inCircle = (x, y, centerX, centerY, radius) => {
 
 gridX = 80
 gridY = 80
-const palette = random.pick(palettes)
-const bg = random.pick(palette)
-palette.splice(palette.indexOf(bg), 1)
+// const palette = random.pick(palettes)
+// const bg = random.pick(palette)
+const bg = "#222"
+const palette = require("../delta.json")
+// palette.splice(palette.indexOf(bg), 1)
 color = random.pick(palette)
-palette.splice(palette.indexOf(color), 1)
-color2 = random.pick(palette)
+// palette.splice(palette.indexOf(color), 1)
+// color2 = random.pick(palette)
 
 centerX = settings.dimensions[0] / 2
 centerY = settings.dimensions[1] / 2
@@ -131,7 +133,7 @@ const sketch = () => {
 					values.v * height,
 					centerX,
 					centerY,
-					height / 2 - paddinginPixels + 8
+					width / 2 - paddinginPixels + 8
 				)
 			) {
 				delete points[key]
@@ -140,12 +142,13 @@ const sketch = () => {
 		context.fillStyle = bg
 		context.fillRect(0, 0, width, height)
 		context.strokeStyle = color
-		context.lineWidth = 2
+		context.lineWidth = 4
 		context.lineJoin = 'round'
 
 		Object.entries(points).forEach(element => {
 			let [key, point] = element
 			key = key.match(/(\d*),(\d*)/)
+			context.strokeStyle = random.pick(palette)
 			drawLine(context, points, width, height, key[2], key[1])
 		})
 	}
