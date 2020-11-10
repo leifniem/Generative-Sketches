@@ -4,3 +4,4 @@ output
 dist
 .cache
 *.mp4
+dist

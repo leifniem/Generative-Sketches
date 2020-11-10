@@ -1,0 +1,20 @@
+{
+  "name": "iridescence-shader",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "run": "parcel index.html"
+  },
+  "author": "Leif Niemczik",
+  "devDependencies": {
+    "parcel-plugin-static-files-copy": "^2.5.0"
+  },
+  "staticFiles": {
+    "staticPath": "assets/**/*",
+    "watcherGlob": "**/*"
+  },
+  "dependencies": {
+    "assets": "^3.0.1"
+  }
+}
