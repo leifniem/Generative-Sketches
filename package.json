@@ -28,7 +28,7 @@
     "parcel-bundler": "^1.12.4",
     "regl": "^2.0.1",
     "simplenoise": "^1.0.1",
-    "three": "^0.122.0"
+    "three": "^0.137.0"
   },
   "babel": {
     "presets": [
