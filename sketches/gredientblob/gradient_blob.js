@@ -80,11 +80,11 @@ const frag = glslify( /* glsl */ `
 		float base = heightAt(vnoise) * marginFade;
 
 		// normals
-		float top = pow(vonoise(dispLookup + vec3(.0, -.02, .0)).r, 3.);
-		float bottom = pow(vonoise(dispLookup + vec3(.0, .02, .0)).r, 3.);
-		float left = pow(vonoise(dispLookup + vec3(-.02, .0, .0)).r, 3.);
-		float right = pow(vonoise(dispLookup + vec3(.02, .0, .0)).r, 3.);
-		vec3 normal = vec3(8. * (left - right), 8. * (bottom - top), 1.);
+		float top = pow(vonoise(dispLookup + vec3(.0, -.05, .0)).r, 3.);
+		float bottom = pow(vonoise(dispLookup + vec3(.0, .05, .0)).r, 3.);
+		float left = pow(vonoise(dispLookup + vec3(-.05, .0, .0)).r, 3.);
+		float right = pow(vonoise(dispLookup + vec3(.05, .0, .0)).r, 3.);
+		vec3 normal = vec3(4. * (left - right), 16. * (bottom - top), 1.);
 
 		// color random
 		vec3 colorShift = vec3(
@@ -93,14 +93,14 @@ const frag = glslify( /* glsl */ `
 			noise(lookup + vnoise.g)
 		);
 
-		gl_FragColor = vec4(pow((- normal.r + normal.g) * base, 2.) * 3. * palette[4], 1.);
-		// gl_FragColor = vec4(
-		// 	colorLookup(base) * .7
-		// 	+ pow((- normal.r + normal.g) * base, 2.) * 3. * palette[4]
-		// 	+ (colorShift * base * marginFade) * .3
-		// 	+ noise(vec3(vUv * 1000., 0.) + timeOffset) * .05,
-		// 	1.0
-		// );
+		vec3 high = vec3(normal.r * normal.g * base * 20. * palette[4]) / 20.;
+		gl_FragColor = vec4(
+			colorLookup(base) * .7
+			+ high
+			+ (colorShift * base * marginFade) * .3
+			+ noise(vec3(vUv * 1000., 0.) + timeOffset) * .05,
+			1.0
+		);
 	}
 `)
 
