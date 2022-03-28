@@ -7,7 +7,7 @@ const settings = {
 	dimensions: [1024, 1024],
 	context: 'webgl',
 	animate: true,
-	duration: 10,
+	// duration: 10,
 };
 
 const sketch = async ({ gl }) => {

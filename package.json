@@ -9,26 +9,26 @@
   "keywords": [],
   "author": "Leif Niemczik <leif.niem@gmail.com>",
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/core": "^7.17.8",
+    "@babel/preset-env": "^7.16.11",
     "bezier-easing": "^2.1.0",
-    "canvas-sketch": "0.7.4",
-    "canvas-sketch-cli": "^1.11.9",
+    "canvas-sketch": "0.7.5",
+    "canvas-sketch-cli": "^1.11.15",
     "canvas-sketch-util": "^1.10.0",
     "convex-hull": "^1.0.3",
     "eases": "^1.0.8",
-    "gl-matrix": "^3.3.0",
+    "gl-matrix": "^3.4.3",
     "glsl-face-normal": "^1.0.2",
     "glsl-hash-blur": "^1.0.3",
     "glsl-hsl2rgb": "^1.1.0",
     "glsl-noise": "^0.0.0",
     "load-asset": "^1.2.0",
     "nice-color-palettes": "^3.0.0",
-    "p5": "^1.1.9",
+    "p5": "^1.4.1",
     "parcel-bundler": "^1.12.4",
-    "regl": "^2.0.1",
+    "regl": "^2.1.0",
     "simplenoise": "^1.0.1",
-    "three": "^0.122.0"
+    "three": "^0.139.0"
   },
   "babel": {
     "presets": [
@@ -36,8 +36,10 @@
     ]
   },
   "devDependencies": {
-    "@babel/plugin-transform-runtime": "^7.12.1",
+    "@babel/plugin-transform-runtime": "^7.17.0",
     "babel-preset-env": "^1.7.0",
-    "glsl-fast-gaussian-blur": "^1.0.2"
-	}
+    "glsl-fast-gaussian-blur": "^1.0.2",
+    "glsl-voronoi-noise": "^1.2.2"
+  },
+  "packageManager": "yarn@3.2.0"
 }
