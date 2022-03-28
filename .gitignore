@@ -5,3 +5,5 @@ dist
 .cache
 *.mp4
 dist
+.yarn
+.vscode
